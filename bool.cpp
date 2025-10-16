@@ -1,37 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 int main(){
-    int testcases, length, middleP, oneIndex, zeroIndex;
-    string answer;
-
-    cin >> testcases;
-
-    for(int i = 0; i < testcases; i++){
-        cin >> length;
-        middleP = (length/2) -1;
-        int stepsize = middleP/2;
-        oneIndex = 0;
-        zeroIndex = length/2;
-
-        bool curr = false, right=false;
-
-        while(oneIndex +1 != zeroIndex){
-            cout << "READ " << (middleP) << endl;
-            cin >> answer;
-            if(answer == "true"){
-                oneIndex = middleP;
-                middleP += stepsize;
-            }else{
-                zeroIndex = middleP;
-                middleP -= stepsize;
-            } 
-            stepsize/=2;
-            stepsize = (stepsize <= 0)?1:stepsize;
-        
-            
-                
-            } 
-            cout << "OUTPUT " << (middleP) << endl;
+ int n,l,m,s,o,z;
+ string a;
+ ios::sync_with_stdio(0);cin.tie(0);
+ for(cin>>n;n--;){
+  cin>>l;m=l/2;s=l/4;o=0;z=l-1;
+   while(o+1!=z){
+    cout<<"READ "<<m<<"\n"<<flush;cin>>a;
+    if(a=="true")o=m,m+=s;else z=m,m-=s;
+    s=s%2+s/2;
+    }  
+    cout<<"OUTPUT "<<o<<"\n"<<flush;
     }
 }

@@ -3,10 +3,15 @@
 using namespace std;
 
 int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
+    int n = 10000;
+    cout << 1 << endl << n << endl;
     srand(time(0));
-    for(int i = 0; i < 500; i++){
-        cout << rand()%1001 << rand() << " ";
+    for(int i = 0; i < 10000; i++){
+        //cout  << (rand()%10000001) << " ";
+        if(i == 30){
+            cout <<0<< " ";
+        }else{
+            cout  << i << " ";
+        }
     }
 }

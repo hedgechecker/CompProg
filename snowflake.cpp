@@ -1,38 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
-long long flakes[150000] = {}; 
 
+int main() {
+    int T;
+    cin >> T;
 
-int nextIndex(int left, int right, int num){
-    if(left > right){
-        return left;
-    }
-    for(int i = left; i <= right; i++){
-        if(flakes[i] == num){
-            return i+1;
+    while (T--) {
+        int n;
+        cin >> n;
+
+        vector<int> snowflakes(n);
+        for (int i = 0; i < n; ++i) {
+            cin >> snowflakes[i];
         }
-    }
-    return left;
-}
 
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    int cases, snowflakes, left, num, maxWindow;
-    for(cin >> cases; cases--;){
-        cin >> snowflakes;
+        unordered_map<int, int> lastSeen;
+        int maxLen = 0;
+        int left = 0;
 
-        cin >> num;
-        left = 0;
-        maxWindow = 1;
-        flakes[0] = num;
+        for (int right = 0; right < n; ++right) {
+            int snow = snowflakes[right];
 
-        for(int i = 1; i < snowflakes; i++){
-            cin >> num;
-            flakes[i] = num;
-            left = nextIndex(left, i-1, num);
-            maxWindow = ((i-left+1) > maxWindow)? (i-left+1): maxWindow;
+            if (lastSeen.count(snow) && lastSeen[snow] >= left) {
+                left = lastSeen[snow] + 1;
+            }
+
+            lastSeen[snow] = right;
+            maxLen = max(maxLen, right - left + 1);
         }
-        cout << maxWindow << endl;
+
+        cout << maxLen << '\n';
     }
+
+    return 0;
 }

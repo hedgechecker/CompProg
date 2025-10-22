@@ -1,14 +1,16 @@
 {
   "configurations": [
     {
-      "name": "Win32",
+      "name": "linux-clang-x64",
       "includePath": [
         "${workspaceFolder}/**",
         "C:/mingw64/include/c++/11.2.0",
         "C:/mingw64/include/c++/11.2.0/x86_64-w64-mingw32"
       ],
       "compilerPath": "C:/mingw64/bin/g++.exe",
-      "intelliSenseMode": "gcc-x64"
+      "intelliSenseMode": "linux-clang-x64",
+      "cStandard": "${default}",
+      "cppStandard": "${default}"
     }
   ],
   "version": 4

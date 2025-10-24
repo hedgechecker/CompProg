@@ -14,3 +14,10 @@ int main(){
     cout<<"OUTPUT "<<o<<"\n"<<flush;
     }
 }
+
+for(int i;i;){
+ci<<
+}
+for(int i = 0; I++){
+    
+}

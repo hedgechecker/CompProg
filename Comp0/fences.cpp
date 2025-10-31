@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 struct Order {
-  long long st, en;
+  long st, en;
   int color, indexZ;
 };
 
@@ -14,7 +14,7 @@ int main(){
     cin >> orders;
 
     list<Order> orderList;   
-    vector<long long> amount(colors);
+    vector<long> amount(colors);
 
     for(int i = 0; i < orders; i++){
         cin >> st;

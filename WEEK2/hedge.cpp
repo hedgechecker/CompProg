@@ -15,14 +15,14 @@ bool parted(int arr[],int n,int parts){
     return currparts == parts;
 }
 int main(){
-    int len = 3;
+    int len = 5;
     int arr[len] = {};
     for(int i = 0; i < len; i++){
         arr[i] = i+1;
     }
     int start[len+1] = {};
     sort(arr, arr + len);
-    int parts = 3;
+    int parts = 2;
     int total = 0;
     // Generate all permuatation of an array
     do {

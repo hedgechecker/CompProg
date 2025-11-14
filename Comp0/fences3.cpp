@@ -2,31 +2,71 @@
 using namespace std;
 
 struct Order{
-    long st,en;
-    int color,indexZ;
-}
+    int indexZ;
+    int color;
+    bool operator<(const Order o) const { 
+        return indexZ < o.indexZ ;
+    } 
+};
+
+struct Event{
+    long pos;
+    int start;
+    int ordernum;
+};
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    cin >> colors;
-    cin >> orders;
+    int colors,orders;
+    cin >> colors >> orders;
 
     vector<Order> orderList(orders);   
-    vector<long> amount(colors);
+    vector<long long> amount(colors, 0);
+    vector<Event> events(2*orders);
 
     for(int i = 0; i < orders; i++){
-        cin >> st;
-        cin >> en;
-        cin >> color;
-        orderList[i] = {st,en,color,i};
+        long st, en;
+        int color;
+        cin >> st >> en >> color;
+        orderList[i] = {i,color};
+        events[2*i] = {st, 1,i};
+        events[2*i +1] = {en, 0,i};
     }
 
     struct {
-        bool operator()(Order a, Order b) const { 
-            return ( a.st) > (b.st) ;
+        bool operator()(Event a, Event b) const { 
+            if (a.pos == b.pos) return a.start > b.start;
+            return a.pos < b.pos;
         }
     }
     customLess;
-    sort(orderList.begin(), orderList.end(), customLess);
+    sort(events.begin(), events.end(), customLess);
 
+    set<tuple<int,int>> active;
+    int prevPos = events.front().pos;
+
+    for(const auto &e : events){
+        int currPos = e.pos;
+
+        if (!active.empty()) {
+            auto it = *(prev(active.end()));
+            int topColor = get<1>(it);
+            amount[topColor] += (currPos - prevPos);
+        }
+
+        Order o = orderList[e.ordernum];
+        if(e.start){
+            active.insert({o.indexZ,o.color});
+        }else if(!e.start){
+            active.erase({o.indexZ,o.color});
+        }
+
+        prevPos = currPos;
+    }
+
+    for (long long a : amount){
+        cout << a << "\n";
+
+    }
+    return 0;
 }

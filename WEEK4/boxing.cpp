@@ -3,6 +3,7 @@ using namespace std;
 
 int w, h;
 vector<vector<int>> board;
+//vector<vector<tuple<int,int>>> parent;
 int x,y;
 
 int checkValid(tuple<int,int> t){
@@ -45,7 +46,7 @@ void printMoves(queue<tuple<int,int>> &knights, int val){
             int x = get<1>(i);
             if(y < 0 || y >= h || x < 0 || x>= w){}
             else if(board[y][x] == val){
-                cout << (h-1)-get<0>(curr)+1 << " " << get<1>(curr)+1  << " " << (h-1)-y+1 << " " << x+1 << endl;
+                cout << (h-1)-get<0>(curr)+1 << " " << get<1>(curr)+1  << " " << (h-1)-y+1 << " " << x+1 << "\n";
                 curr = {y,x};
                 val--;
                 if(val < 0){
@@ -64,6 +65,7 @@ int main(){
     cin >> w;
     cin >> h;
     board.assign(h,vector<int>(w));
+   // parent.assign(h,vector<tuple<int,int>>(w, {0,0}));
     char c;
     queue<tuple<int,int>> que;
     queue<tuple<int,int>> knights;
@@ -89,6 +91,7 @@ int main(){
     }
 
     int val;
+    tuple<int,int> sol;
     while(!que.empty()){
         tuple t = que.front();
         val = board[get<0>(t)][get<1>(t)];
@@ -100,18 +103,26 @@ int main(){
             int ch = checkValid(i); 
             if(ch == 1){
                 board[get<0>(i)][get<1>(i)] = val +1;
+                //parent[get<0>(i)][get<1>(i)] = t;
                 que.push(i);
             }else if(ch == -1){
-                cout << "Checkmate in " << val +1 << endl;
+                sol = i;
+                cout << "Checkmate in " << val +1 << "\n";
                 goto skip;
             }
         }
     }
-    cout << "Resign" << endl;
+    cout << "Resign" << "\n";
     return 0;
 
 
     skip:
     printMoves(knights, val);
+    // tuple<int,int> curr = sol;
+    // for(int i = 0; i <= val; i++){
+    //     tuple<int,int> par = parent[get<0>(curr)][get<1>(curr)];
+    //     cout << (h-1)-get<0>(curr)+1 << " " << get<1>(curr)+1  << " " << (h-1)-get<0>(par)+1 << " " << get<1>(par)+1 << "\n";
+    //     curr = par;
+    // }
     return 0;
 }

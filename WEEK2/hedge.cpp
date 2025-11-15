@@ -1,45 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
-bool parted(int arr[],int n,int parts){
-    int last = arr[0];
-    int currparts = 1;
-    for(int i = 1; i < n; i++){
-        if(arr[i] > last){
-            currparts++;
-        }
-        last = arr[i];
-        if(currparts > parts){
-            return false;
-        }
+vector<vector<int>> poss(2001, vector<int>(2001,0));
+
+long calcPoss(int n,int p){
+    if(poss[n][p] != 0){
+        return poss[n][p];
     }
-    return currparts == parts;
+    if(n == p || p == 1 || n == 1){
+        poss[n][p] = 1;
+        return 1;
+    }
+    if(p>n){
+        cout << "index error" << n << " " <<p <<endl;
+        return 0;
+    }
+    poss[n][p] = ((long long)p * calcPoss(n-1, p) + (long long)(n-p+1) * calcPoss(n-1, p-1)) % 998244353;
+    return poss[n][p];
 }
 int main(){
-    int len = 5;
-    int arr[len] = {};
-    for(int i = 0; i < len; i++){
-        arr[i] = i+1;
+    int num;
+    cin >> num;
+    for(int i = 0; i < num; i++){
+        int n,p;
+        cin >> n >> p;
+        cout << calcPoss(n,p) << endl;
     }
-    int start[len+1] = {};
-    sort(arr, arr + len);
-    int parts = 2;
-    int total = 0;
-    // Generate all permuatation of an array
-    do {
-        if(parted(arr,len,parts)){
-            start[arr[0]]++;
-            // for (int i = 0; i < len; i++)
-            //     cout << arr[i] << " ";
-            // cout << endl;
-            total++;
-        }
-        
-    } while (next_permutation(arr, arr + len));
-
-    for(int i = 1; i <= len; i++){
-        cout << "Start "<< i << " IS" << start[i]<<endl;
-    }
-    cout << total << endl;
-    return 0;
-
-} 
+}

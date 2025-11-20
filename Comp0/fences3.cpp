@@ -10,7 +10,7 @@ struct Order{
 };
 
 struct Event{
-    long pos;
+    long long pos;
     int start;
     int ordernum;
 };
@@ -33,6 +33,10 @@ int main(){
         events[2*i +1] = {en, 0,i};
     }
 
+    // for(int i= 0; i < orders; i++){
+    //     cout << orderList[i].indexZ << " " << orderList[i].color << endl;
+    // }
+
     struct {
         bool operator()(Event a, Event b) const { 
             if (a.pos == b.pos) return a.start > b.start;
@@ -43,21 +47,22 @@ int main(){
     sort(events.begin(), events.end(), customLess);
 
     set<tuple<int,int>> active;
-    int prevPos = events.front().pos;
+    long long prevPos = events.front().pos;
 
-    for(const auto &e : events){
-        int currPos = e.pos;
+    //long long prevPos = 0;
+    for(const Event &e : events){
+        long long currPos = e.pos;
 
         if (!active.empty()) {
-            auto it = *(prev(active.end()));
+            tuple<int,int> it = *(prev(active.end()));
             int topColor = get<1>(it);
-            amount[topColor] += (currPos - prevPos);
+            amount[topColor] += ((long long)currPos - (long long)prevPos);
         }
 
         Order o = orderList[e.ordernum];
         if(e.start){
             active.insert({o.indexZ,o.color});
-        }else if(!e.start){
+        }else {
             active.erase({o.indexZ,o.color});
         }
 
